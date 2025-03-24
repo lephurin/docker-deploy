@@ -17,7 +17,7 @@ export const Home = () => {
 
   return (
     <div>
-      <h2>To Test Deploy GCP with docker</h2>
+      <h2 className="text-xl font-medium">To Test Deploy GCP with docker</h2>
       <p>client version: {process.env.NEXT_PUBLIC_CLIENT_VERSION}</p>
       <p>server version: {serverVersion}</p>
     </div>
