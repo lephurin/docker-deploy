@@ -28,6 +28,9 @@ jobs:
       - name: Run tests with coverage
         run: npm run test:coverage
 
+      - name: Debug SonarQube URL
+        run: echo "SONAR_HOST_URL=${{ secrets.SONAR_HOST_URL }}"
+
       # SonarQube Scan
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
