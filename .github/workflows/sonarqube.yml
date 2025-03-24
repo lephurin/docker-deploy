@@ -1,4 +1,5 @@
 name: SonarQube Scan
+
 on:
   push:
     branches:
@@ -12,19 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
 
+      # Install Node.js and dependencies
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "20"
 
       - name: Install dependencies
         run: npm ci
 
+      # Run tests with coverage
       - name: Run tests with coverage
         run: npm run test:coverage
 
+      # SonarQube Scan
       - name: SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
