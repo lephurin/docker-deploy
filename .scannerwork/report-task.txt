@@ -1,0 +1,6 @@
+projectKey=docker-deploy
+serverUrl=http://localhost:9000
+serverVersion=25.3.0.104237
+dashboardUrl=http://localhost:9000/dashboard?id=docker-deploy
+ceTaskId=4f2d4cf8-20c2-410c-8eb6-05ef8a83634c
+ceTaskUrl=http://localhost:9000/api/ce/task?id=4f2d4cf8-20c2-410c-8eb6-05ef8a83634c
