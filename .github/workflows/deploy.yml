@@ -3,47 +3,46 @@ name: Build and Deploy to Cloud Run
 on:
   push:
     branches:
-      - main
+      - main # Trigger the workflow on pushes to the main branch
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
+      # Authenticate using Google Cloud credentials
       - name: Authenticate with Google Cloud
-        uses: google-github-actions/auth@v2
+        uses: google-github-actions/auth@v1
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }} # Use GitHub Secret for service account key
 
+      # Set up Google Cloud SDK
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2
+        uses: google-github-actions/setup-gcloud@v1
         with:
-          project_id: docker-deploy-454713
+          project_id: docker-deploy-454713 # Your GCP project ID
 
+      # Add this step to configure Docker authentication
       - name: Configure Docker for Artifact Registry
         run: gcloud auth configure-docker asia-southeast2-docker.pkg.dev
 
+      # Build Docker image
       - name: Build Docker image
         run: |
-          docker build \
-            --build-arg NEXT_PUBLIC_CLIENT_VERSION=${{ secrets.NEXT_PUBLIC_CLIENT_VERSION }} \
-            --build-arg SERVER_VERSION=${{ secrets.SERVER_VERSION }} \
-            -t asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:${{ github.sha }} \
-            -t asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:latest \
-            .
+          docker build -t asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:v1 .
 
+      # Push Docker image to Google Artifact Registry
       - name: Push Docker image to Google Artifact Registry
         run: |
-          docker push asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:${{ github.sha }}
-          docker push asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:latest
+          docker push asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:v1
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy docker-deploy \
-            --image=asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:${{ github.sha }} \
+            --image=asia-southeast2-docker.pkg.dev/docker-deploy-454713/docker-deploy-artifact/docker-deploy:v1 \
             --region=asia-southeast2 \
             --platform=managed \
             --allow-unauthenticated \
