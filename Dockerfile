@@ -13,6 +13,7 @@ COPY . .
 ARG APP_ENV=production
 RUN echo "The ARG variable value is $APP_ENV"
 COPY .env.${APP_ENV} ./.env
+RUN rm -rf .env.production
 
 # Step 5: Build the Next.js app
 RUN npm run build
