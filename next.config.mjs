@@ -1,4 +1,9 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  output: "standalone",
+  env: {
+    NEXT_PUBLIC_CLIENT_VERSION: process.env.NEXT_PUBLIC_CLIENT_VERSION,
+  },
+};
 
-export default nextConfig;
+module.exports = nextConfig;
