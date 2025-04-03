@@ -1,5 +1,6 @@
 "use client";
 
+import ImageUploader from "@/components/ImageUploader";
 import { useEffect, useState } from "react";
 
 export const Home = () => {
@@ -24,6 +25,7 @@ export const Home = () => {
         <hr className="my-4 h-[1px] bg-black w-full" />
         <p>client version: {clientVersion}</p>
         <p>server version: {serverVersion}</p>
+        <ImageUploader />
       </div>
     </div>
   );
