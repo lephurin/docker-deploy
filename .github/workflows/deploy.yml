@@ -47,4 +47,9 @@ jobs:
             --platform=managed \
             --allow-unauthenticated \
             --port=3000 \
-            --set-env-vars NEXT_PUBLIC_CLIENT_VERSION=${{ secrets.NEXT_PUBLIC_CLIENT_VERSION }},SERVER_VERSION=${{ secrets.SERVER_VERSION }},GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID }},GCP_CLIENT_EMAIL=${{ secrets.GCP_CLIENT_EMAIL }},GCP_PRIVATE_KEY=${{ secrets.GCP_PRIVATE_KEY }},GCP_BUCKET_NAME=${{ secrets.GCP_BUCKET_NAME }}
+            --set-env-vars="NEXT_PUBLIC_CLIENT_VERSION=${{ secrets.NEXT_PUBLIC_CLIENT_VERSION }}" \
+            --set-env-vars="SERVER_VERSION=${{ secrets.SERVER_VERSION }}" \
+            --set-env-vars="GCP_PROJECT_ID=${{ secrets.GCP_PROJECT_ID }}" \
+            --set-env-vars="GCP_CLIENT_EMAIL=${{ secrets.GCP_CLIENT_EMAIL }}" \
+            --set-env-vars="GCP_PRIVATE_KEY='${{ secrets.GCP_PRIVATE_KEY }}'" \
+            --set-env-vars="GCP_BUCKET_NAME=${{ secrets.GCP_BUCKET_NAME }}"
